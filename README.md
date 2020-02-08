@@ -18,7 +18,7 @@ sudo docker run -d \
 --name spotifyd \
 rohmilkaese/spotifyd
 ```
-Place a valid shairport.conf file in directory you run the docker run command.
+Place a valid spotifyd.conf file in directory you run the docker run command.
 
 ## Docker Compose
 
@@ -34,4 +34,4 @@ services:
     devices:
        - /dev/snd
 ```
-Place a valid shairport.conf file in /conf directory.
+Place a valid spotifyd.conf file in /conf directory.
