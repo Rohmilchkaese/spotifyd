@@ -13,12 +13,10 @@ Command:
 
 ```bash
 sudo docker run -d \
--v $PWD:/conf/ \
---net host \
+-v $PWD/conf/spotifyd.conf:/etc/spotifyd.conf \
 --device /dev/snd \
---name shairport-sync \
-rohmilkaese/shairport-sync \
--vu -c /conf/shairport.conf
+--name spotifyd \
+rohmilkaese/spotifyd
 ```
 Place a valid shairport.conf file in directory you run the docker run command.
 
@@ -28,14 +26,12 @@ docker-compose.yaml
 ```bash
 version: "2.2"
 services:
-   shairport-sync:
-    container_name: shairport-sync
-    image: rohmilkaese/shairport-sync:latest
+   spotifyd:
+    container_name: spotifyd
+    image: rohmilkaese/spotifyd:latest
     volumes:
-       - ./conf/shairport.conf:/conf/shairport.conf
+       - ./conf/spotifyd.conf:/etc/spotifyd.conf:ro
     devices:
        - /dev/snd
-    command: -vu -c conf/shairport.conf
-    network_mode: "host"
 ```
 Place a valid shairport.conf file in /conf directory.
