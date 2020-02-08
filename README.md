@@ -5,7 +5,7 @@ Link to [Docker Hub](https://hub.docker.com/r/rohmilkaese/spotifyd)
 
 [Spotifyd](https://github.com/Spotifyd/spotifyd) streams music just like the official client, but is more lightweight and supports more platforms. Spotifyd also supports the Spotify Connect protocol, which makes it show up as a device that can be controlled from the official clients.
 
-I build this Docker image because there was no Spotifyd Image running on Alpine Linux. As far as I can tell, this is the only one running on Alpine, which also makes it the smallest one. Counting in at ~ 22 mb.
+I build this Docker image because there was no Spotifyd Image running on Alpine Linux. As far as I can tell, this is the only one running on Alpine, which also makes it the smallest one. Counting in at ~ 22 mb installed and ~ 8 mb compressed to dowload form Docker Hub.
 
 ## Docker Run
 
