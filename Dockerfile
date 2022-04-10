@@ -1,4 +1,4 @@
-FROM alpine:3.15.4 AS build 
+FROM alpine:3.14 AS build 
 RUN apk -U --no-cache add \
 	git \
 	build-base \
