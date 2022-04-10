@@ -18,7 +18,7 @@ RUN cd /root \
 && git clone https://github.com/Spotifyd/spotifyd .\
 && git checkout tags/v0.3.3 \
 && cargo build --release
-FROM alpine:edge
+FROM alpine:3.14
 RUN apk -U --no-cache add \
         libtool \
         alsa-lib-dev \
