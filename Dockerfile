@@ -22,7 +22,8 @@ FROM alpine:3.14
 RUN apk -U --no-cache add \
         libtool \
         alsa-lib-dev \
-        libconfig-dev 
+        libconfig-dev \
+		dbus
 COPY --from=build /root/target/release/spotifyd /usr/bin/spotifyd
 COPY bootstrap.sh /start
 RUN chmod +x /start
