@@ -1,4 +1,4 @@
-FROM alpine:edge AS build 
+FROM alpine:3.15.4 AS build 
 RUN apk -U --no-cache add \
 	git \
 	build-base \
@@ -16,6 +16,7 @@ RUN apk -U --no-cache add \
 
 RUN cd /root \ 
 && git clone https://github.com/Spotifyd/spotifyd .\
+&& git checkout tags/v0.3.3 \
 && cargo build --release
 FROM alpine:edge
 RUN apk -U --no-cache add \
