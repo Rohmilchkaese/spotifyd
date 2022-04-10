@@ -7,4 +7,3 @@ dbus-uuidgen --ensure
 dbus-daemon --system
 
 /usr/bin/spotifyd --config-path /etc/spotifyd.conf --no-daemon
-

@@ -26,4 +26,4 @@ RUN apk -U --no-cache add \
 COPY --from=build /root/target/release/spotifyd /usr/bin/spotifyd
 COPY bootstrap.sh /start
 RUN chmod +x /start
-ENTRYPOINT [ "/start" ]	
+ENTRYPOINT [ "/start" ]
