@@ -23,7 +23,7 @@ Place a valid spotifyd.conf file in directory you run the docker run command.
 ## Docker Compose
 
 docker-compose.yaml
-```bash
+```yaml
 version: "2.2"
 services:
    spotifyd:
