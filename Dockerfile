@@ -1,4 +1,4 @@
-FROM alpine:3.14 AS build 
+FROM alpine:3.17.2 AS build 
 RUN apk -U --no-cache add \
 	git \
 	build-base \
@@ -17,9 +17,9 @@ RUN apk -U --no-cache add \
 
 RUN cd /root \ 
 && git clone https://github.com/Spotifyd/spotifyd . \
-&& git checkout tags/v0.3.3 \
+&& git checkout tags/v0.3.4 \
 && cargo build --release
-FROM alpine:3.14
+FROM alpine:3.17.2
 RUN apk -U --no-cache add \
         libtool \
         libconfig-dev \
