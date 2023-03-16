@@ -1,4 +1,5 @@
-FROM alpine:3.17.2 AS build 
+FROM alpine:3.17.2 AS build
+ARG CARGO_NET_GIT_FETCH_WITH_CLI=true
 RUN apk -U --no-cache add \
 	git \
 	build-base \
