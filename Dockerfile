@@ -1,4 +1,4 @@
-FROM alpine:3.17.2 AS build
+FROM alpine:3.18.4 AS build
 ARG CARGO_NET_GIT_FETCH_WITH_CLI=true
 RUN apk -U --no-cache add \
 	git \
@@ -18,9 +18,9 @@ RUN apk -U --no-cache add \
 
 RUN cd /root \ 
 && git clone https://github.com/Spotifyd/spotifyd . \
-&& git checkout tags/v0.3.4 \
+&& git checkout tags/v0.3.5 \
 && cargo build --release
-FROM alpine:3.17.2
+FROM alpine:3.18.4
 RUN apk -U --no-cache add \
         libtool \
         libconfig-dev \
