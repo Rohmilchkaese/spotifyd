@@ -1,32 +1,31 @@
 FROM alpine:3.21.6 AS build
-ARG CARGO_NET_GIT_FETCH_WITH_CLI=true
+ARG SPOTIFYD_VERSION=0.4.2
 RUN apk -U --no-cache add \
 	git \
 	build-base \
-    avahi-dev \
-	autoconf \
-	automake \
-	libtool \
 	alsa-lib-dev \
+	avahi-dev \
+	dbus-dev \
 	openssl-dev \
-	libconfig-dev \
-	libstdc++ \
-	gcc \
-	rust \
-	cargo 
+	pulseaudio-dev \
+	curl
 
-RUN cd /root \ 
-&& git clone https://github.com/Spotifyd/spotifyd . \
-&& git checkout tags/v0.4.2 \
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+ENV PATH="/root/.cargo/bin:${PATH}"
+ENV RUSTFLAGS="-C target-feature=-crt-static"
+
+RUN git clone https://github.com/Spotifyd/spotifyd /build \
+&& cd /build \
+&& git checkout tags/v${SPOTIFYD_VERSION} \
 && cargo build --release
+
 FROM alpine:3.21.6
 RUN apk -U --no-cache add \
-        libtool \
-        libconfig-dev \
-		alsa-lib \
-		avahi \
-		dbus
-COPY --from=build /root/target/release/spotifyd /usr/bin/spotifyd
-COPY bootstrap.sh /start
-RUN chmod +x /start
+	alsa-lib \
+	avahi \
+	dbus \
+	libgcc \
+	libpulse
+COPY --from=build /build/target/release/spotifyd /usr/bin/spotifyd
+COPY --chmod=+x bootstrap.sh /start
 ENTRYPOINT [ "/start" ]

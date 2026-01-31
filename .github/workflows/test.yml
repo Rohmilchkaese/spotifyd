@@ -1,0 +1,56 @@
+name: Test
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build-test:
+    name: Build test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build (no push)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: false
+
+  tag:
+    name: Auto-tag version
+    needs: build-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Parse version and create tag
+        run: |
+          VERSION=$(grep -oP 'SPOTIFYD_VERSION=\K[0-9.]+' Dockerfile)
+          TAG="v${VERSION}"
+          echo "Detected version: ${VERSION} -> tag: ${TAG}"
+
+          if git ls-remote --tags origin "refs/tags/${TAG}" | grep -q "${TAG}"; then
+            echo "Tag ${TAG} already exists, skipping."
+          else
+            git tag "${TAG}"
+            git push origin "${TAG}"
+            echo "Created and pushed tag ${TAG}."
+          fi
+
+  publish:
+    name: Publish to Docker Hub
+    needs: build-test
+    uses: ./.github/workflows/publish.yml
+    secrets: inherit
