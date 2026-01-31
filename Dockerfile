@@ -1,4 +1,4 @@
-FROM alpine:3.18.4 AS build
+FROM alpine:3.21.6 AS build
 ARG CARGO_NET_GIT_FETCH_WITH_CLI=true
 RUN apk -U --no-cache add \
 	git \
@@ -7,9 +7,8 @@ RUN apk -U --no-cache add \
 	autoconf \
 	automake \
 	libtool \
-	libdaemon-dev \
 	alsa-lib-dev \
-	libressl-dev \
+	openssl-dev \
 	libconfig-dev \
 	libstdc++ \
 	gcc \
@@ -18,9 +17,9 @@ RUN apk -U --no-cache add \
 
 RUN cd /root \ 
 && git clone https://github.com/Spotifyd/spotifyd . \
-&& git checkout tags/v0.3.5 \
+&& git checkout tags/v0.4.2 \
 && cargo build --release
-FROM alpine:3.18.4
+FROM alpine:3.21.6
 RUN apk -U --no-cache add \
         libtool \
         libconfig-dev \
