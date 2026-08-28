@@ -1,4 +1,4 @@
-FROM alpine:3.21.6 AS build
+FROM alpine:3.24.1 AS build
 ARG SPOTIFYD_VERSION=0.4.2
 RUN apk -U --no-cache add \
 	git \
@@ -19,7 +19,7 @@ RUN git clone https://github.com/Spotifyd/spotifyd /build \
 && git checkout tags/v${SPOTIFYD_VERSION} \
 && cargo build --release
 
-FROM alpine:3.21.6
+FROM alpine:3.24.1
 RUN apk -U --no-cache add \
 	alsa-lib \
 	avahi \
